@@ -40,7 +40,7 @@ jobs:
       - name: Check revdate
         uses: rancher/product-docs-common/.github/actions/check-revdate-composite-action@main
         with:
-          GH_TOKEN: ${{ github.token }}
+          token: ${{ secrets.token }}
 
       - name: Install Antora and dependencies
         run: make environment
