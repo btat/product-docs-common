@@ -7,6 +7,9 @@ on:
         default: 'playbook-local.yml'
         required: false
         type: string
+    secrets:
+      token:
+        required: true
 
 jobs:
   test-deploy:
@@ -36,6 +39,8 @@ jobs:
 
       - name: Check revdate
         uses: rancher/product-docs-common/.github/actions/check-revdate-composite-action@main
+        with:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Install Antora and dependencies
         run: make environment
