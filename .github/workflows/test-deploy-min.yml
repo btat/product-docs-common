@@ -38,7 +38,7 @@ jobs:
           node-version: 22
 
       - name: Check revdate
-        uses: rancher/product-docs-common/.github/actions/check-revdate-composite-action@main
+        uses: btat/product-docs-common/.github/actions/check-revdate-composite-action@wf-test
         with:
           token: ${{ github.token }}
 
