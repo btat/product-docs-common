@@ -44,6 +44,7 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           run-id: ${{ github.event.workflow_run.id }}
+          name: comment-artifact
           path: comment-artifact
       - name: Add a PR comment
         if: steps.download-artifact.conclusion == 'success'
