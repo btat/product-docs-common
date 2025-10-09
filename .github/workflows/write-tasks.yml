@@ -22,6 +22,12 @@ jobs:
           echo '-------'
           echo repository: ${{ github.event.workflow_run.pull_requests[0].repository }}
           echo '-------'
+          echo state: ${{ github.event.workflow_run.pull_requests[0].state }}
+          echo '-------'
+          echo merged_at: ${{ github.event.workflow_run.pull_requests[0].merged_at }}
+          echo '-------'
+          echo merge_commit_sha : ${{ github.event.workflow_run.pull_requests[0].merge_commit_sha  }}
+          echo '-------'
           if ${{ github.event.workflow_run.pull_requests[0].merged }}; then
             echo "The associated pull request was merged."
           else
