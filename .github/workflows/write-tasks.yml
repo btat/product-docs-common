@@ -41,6 +41,7 @@ jobs:
     steps:
       - name: Download artifact
         id: download-artifact
+        continue-on-error: true
         uses: actions/download-artifact@v5
         with:
           run-id: ${{ github.event.workflow_run.id }}
