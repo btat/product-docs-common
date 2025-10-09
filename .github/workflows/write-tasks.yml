@@ -46,7 +46,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           path: comment-artifact
       - name: Add a PR comment
-        if: steps.download-artifact == 'success'
+        if: steps.download-artifact.conclusion == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
