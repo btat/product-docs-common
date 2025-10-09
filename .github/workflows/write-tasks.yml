@@ -1,0 +1,16 @@
+name: Tasks needing write permissions
+
+on:
+  workflow_call:
+
+jobs:
+  add-comment:
+    name: Add a comment
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Install Antora and dependencies
+        run: gh pr comment 2 --edit-last --create-if-none -b 'testing123' -R btat/rancher-product-docs
+
+      
