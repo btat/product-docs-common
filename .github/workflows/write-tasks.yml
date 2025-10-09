@@ -4,42 +4,50 @@ on:
   workflow_call:
 
 jobs:
-  check_merge_state:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get PR merge state
-        run: |
-          echo '-------'
-          echo pull_requests: ${{ github.event.workflow_run.pull_requests }}
-          echo '-------'
-          echo pull_request[0]: ${{ github.event.workflow_run.pull_requests[0] }}
-          echo '-------'
-          echo number: ${{ github.event.workflow_run.pull_requests[0].number }}
-          echo '-------'
-          echo merged: ${{ github.event.workflow_run.pull_requests[0].merged }}
-          echo '-------'
-          echo url: ${{ github.event.workflow_run.pull_requests[0].url }}
-          echo '-------'
-          echo repository: ${{ github.event.workflow_run.pull_requests[0].repository }}
-          echo '-------'
-          echo state: ${{ github.event.workflow_run.pull_requests[0].state }}
-          echo '-------'
-          echo merged_at: ${{ github.event.workflow_run.pull_requests[0].merged_at }}
-          echo '-------'
-          echo merge_commit_sha : ${{ github.event.workflow_run.pull_requests[0].merge_commit_sha  }}
-          echo '-------'
-          if ${{ github.event.workflow_run.pull_requests[0].merged }}; then
-            echo "The associated pull request was merged."
-          else
-            echo "The associated pull request was not merged."
-          fi
+#   check_merge_state:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Get PR merge state
+#         run: |
+#           echo '-------'
+#           echo pull_requests: ${{ github.event.workflow_run.pull_requests }}
+#           echo '-------'
+#           echo pull_request[0]: ${{ github.event.workflow_run.pull_requests[0] }}
+#           echo '-------'
+#           echo number: ${{ github.event.workflow_run.pull_requests[0].number }}
+#           echo '-------'
+#           echo merged: ${{ github.event.workflow_run.pull_requests[0].merged }}
+#           echo '-------'
+#           echo url: ${{ github.event.workflow_run.pull_requests[0].url }}
+#           echo '-------'
+#           echo repository: ${{ github.event.workflow_run.pull_requests[0].repository }}
+#           echo '-------'
+#           echo state: ${{ github.event.workflow_run.pull_requests[0].state }}
+#           echo '-------'
+#           echo merged_at: ${{ github.event.workflow_run.pull_requests[0].merged_at }}
+#           echo '-------'
+#           echo merge_commit_sha : ${{ github.event.workflow_run.pull_requests[0].merge_commit_sha  }}
+#           echo '-------'
+#           if ${{ github.event.workflow_run.pull_requests[0].merged }}; then
+#             echo "The associated pull request was merged."
+#           else
+#             echo "The associated pull request was not merged."
+#           fi
+
   add-comment:
-    name: Add a PR comment
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     steps:
-      - env:
+      - name: Download artifact
+        id: download-artifact
+        uses: actions/download-artifact@v5
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+          path: comment-artifact
+      - name: Add a PR comment
+        if: steps.build.download-artifact == 'success'
+        env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh pr view [<number> | <url> | <branch>] --json mergeStateStatus 
