@@ -4,15 +4,33 @@ on:
   workflow_call:
 
 jobs:
+  check_merge_state:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get PR merge state
+        run: |
+          echo '-------'
+          echo pull_requests: ${{ github.event.workflow_run.pull_requests }}
+          echo '-------'
+          echo pull_request[0]: ${{ github.event.workflow_run.pull_requests[0] }}
+          echo '-------'
+          echo number: ${{ github.event.workflow_run.pull_requests[0].number }}
+          echo '-------'
+          if ${{ github.event.workflow_run.pull_requests[0].merged }}; then
+            echo "The associated pull request was merged."
+          else
+            echo "The associated pull request was not merged."
+          fi
   add-comment:
-    name: Add a comment
+    name: Add a PR comment
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     steps:
-      - name: Install Antora and dependencies
-        env:
+      - env:
           GH_TOKEN: ${{ github.token }}
-        run: gh pr comment 2 --edit-last --create-if-none -b 'testing123' -R btat/rancher-product-docs
+        run: |
+          gh pr view [<number> | <url> | <branch>] --json mergeStateStatus 
+          gh pr comment 2 --edit-last --create-if-none -b 'testing123' -R btat/rancher-product-docs
 
       
