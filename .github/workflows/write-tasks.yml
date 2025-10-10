@@ -38,6 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      actions: read
     steps:
       - name: Download artifact
         id: download-artifact
@@ -45,7 +46,8 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           run-id: ${{ github.event.workflow_run.id }}
-        #   name: comment-artifact
+          github-token: ${{ github.token }}
+          name: comment-artifact
           path: artifacts
       - name: Add a PR comment
         if: steps.download-artifact.conclusion == 'success'
