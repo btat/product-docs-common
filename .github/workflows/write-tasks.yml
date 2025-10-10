@@ -59,7 +59,11 @@ jobs:
           echo "-----"
           echo url: ${{ github.event.workflow_run.url }}
           echo "-----"
-          echo repo: ${{ github.event.workflow_run.repository }}
+          echo repo name: ${{ github.event.workflow_run.repository.name }}
+          echo "-----"
+          echo repo: ${{ github.event.workflow_run.repository.url }}
+          echo "-----"
+          echo PR url: ${{ github.event.workflow_run.pull_requests[0].url }}
           echo "-----"
           gh pr comment ${{ github.event.workflow_run.pull_requests[0].number }} \
            --edit-last \
