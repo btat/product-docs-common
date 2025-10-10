@@ -31,7 +31,7 @@ runs:
 
     - name: Upload comment-artifact
       if: steps.check-revdate.conclusion == 'success'
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v4
       with:
         name: comment-artifact
         path: comment-artifact/body.txt
