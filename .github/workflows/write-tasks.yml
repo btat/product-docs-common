@@ -73,5 +73,5 @@ jobs:
            --edit-last \
            --create-if-none \
            --body-file comment-artifact/body.txt \
-           --repo 
+           --repo ${{ github.event.workflow_run.repository.full_name }}
       
