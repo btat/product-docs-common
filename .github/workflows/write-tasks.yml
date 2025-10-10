@@ -52,7 +52,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh pr view [<number> | <url> | <branch>] --json mergeStateStatus 
-          gh pr comment 2 --edit-last --create-if-none -b 'testing123' -R btat/rancher-product-docs
-
+          gh pr comment ${{ github.event.workflow_run.pull_requests[0].number }} \
+           --edit-last \
+           --create-if-none \
+           --body-file comment-artifact/body.txt
       
