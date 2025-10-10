@@ -46,12 +46,15 @@ jobs:
         with:
           run-id: ${{ github.event.workflow_run.id }}
           name: comment-artifact
-          path: comment-artifact
+          path: artifacts
       - name: Add a PR comment
         if: steps.download-artifact.conclusion == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          echo "-----"
+          ls -R
+          echo "-----"
           gh pr comment ${{ github.event.workflow_run.pull_requests[0].number }} \
            --edit-last \
            --create-if-none \
