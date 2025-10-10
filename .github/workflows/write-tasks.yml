@@ -35,6 +35,7 @@ jobs:
 #           fi
 
   add-comment:
+    if: github.event.workflow_run.name == 'Test deployment'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
