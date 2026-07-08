@@ -26,8 +26,8 @@ jobs:
       - name: Checkout helper scripts
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          repository: rancher/product-docs-common
-          ref: main
+          repository: btat/product-docs-common
+          ref: symlink-check
           sparse-checkout: |
             scripts
           sparse-checkout-cone-mode: false
@@ -36,14 +36,17 @@ jobs:
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 22
-
+      
       - name: Check revdate
-        uses: rancher/product-docs-common/.github/actions/check-revdate-composite-action@bef76c9aab79980088a221e72e006acd3bfd8257 # main
+        uses: rancher/product-docs-common/.github/actions/check-revdate-composite-action@bef76c9aab79980088a221e72e006acd3bfd8257
         with:
           token: ${{ secrets.token }}
 
       - name: Install Antora and dependencies
         run: make environment
+
+      - name: Check for broken symlinks
+        uses: btat/product-docs-common/.github/actions/check-symlinks-composite-action@a02250d5b2e69d7dab27524dfa615956d8a23e42
 
       - name: Generate Site
         run: |
