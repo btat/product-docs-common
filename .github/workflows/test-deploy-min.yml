@@ -26,7 +26,7 @@ jobs:
       - name: Checkout helper scripts
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          repository: rancher/product-docs-common
+          repository: btat/product-docs-common
           ref: main
           sparse-checkout: |
             scripts
@@ -38,7 +38,7 @@ jobs:
           node-version: 22
 
       - name: Check for broken symlinks
-        uses: rancher/product-docs-common/.github/actions/check-symlinks-composite-action@a02250d5b2e69d7dab27524dfa615956d8a23e42
+        uses: btat/product-docs-common/.github/actions/check-symlinks-composite-action@a02250d5b2e69d7dab27524dfa615956d8a23e42
       
       - name: Check revdate
         uses: rancher/product-docs-common/.github/actions/check-revdate-composite-action@bef76c9aab79980088a221e72e006acd3bfd8257
