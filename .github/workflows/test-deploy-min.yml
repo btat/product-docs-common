@@ -37,8 +37,11 @@ jobs:
         with:
           node-version: 22
 
+      - name: Check for broken symlinks
+        uses: rancher/product-docs-common/.github/actions/check-symlinks-composite-action@a02250d5b2e69d7dab27524dfa615956d8a23e42
+      
       - name: Check revdate
-        uses: rancher/product-docs-common/.github/actions/check-revdate-composite-action@bef76c9aab79980088a221e72e006acd3bfd8257 # main
+        uses: rancher/product-docs-common/.github/actions/check-revdate-composite-action@bef76c9aab79980088a221e72e006acd3bfd8257
         with:
           token: ${{ secrets.token }}
 
