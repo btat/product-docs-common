@@ -12,7 +12,7 @@ runs:
       env:
         GH_TOKEN: ${{ inputs.token }}
       run: |
-        ancestor=$(git merge-base main ${{ github.head_ref }})
+        ancestor=$(git merge-base origin/${{ github.base_ref }} ${{ github.event.pull_request.head.sha }})
         result=$(helpers/scripts/recurring/check_revdate $ancestor ${{ github.event.pull_request.head.sha }})
         if [[ -n "$result" ]]; then
           mkdir comment-artifact
