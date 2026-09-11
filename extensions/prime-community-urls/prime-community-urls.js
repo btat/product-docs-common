@@ -1,5 +1,5 @@
 // An Antora extension to check for Prime and Community context appropriate 
-// URL usage.The extension parses an input file containing a list of
+// URL usage. The extension parses an input file containing a list of
 // Product-only URLs and a list of Community-only URLs to determine what
 // context a given URL should be used in.
 //
@@ -91,10 +91,7 @@ module.exports.register = function ({ config }) {
       )
 
       const attributes = componentVersion?.asciidoc?.attributes
-      if (!attributes) return
-
-      const buildType = attributes['build-type'] || attributes['product-type']
-      if (!buildType) return
+      const buildType = attributes?.['build-type'] || 'product'
 
       // Verify whether the page is included in the evaluated navigation tree
       if (componentVersion.navigation && componentVersion.navigation.length) {
